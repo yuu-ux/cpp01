@@ -1,29 +1,45 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <cstring>
+#include <sstream>
 
-const int kReplaceNum = 9;
+void ReplaceStr(const std::string content, std::ofstream& ofs, const std::string &original, const std::string &replacement) {
+	std::string::size_type prev = 0;
+	std::string::size_type pos;
+
+	while ((pos = content.find(original, prev)) != std::string::npos) {
+		ofs << content.substr(prev, pos - prev) << replacement;
+		prev = pos + replacement.length();
+	}
+	ofs << content.substr(prev);
+}
+
+bool ReplaceTextInFile(const std::string &file_name, const std::string &original, const std::string &replacement) {
+	std::string after_file_name = file_name + ".replace";
+
+	// 入力・出力準備
+	std::ifstream ifs(file_name.c_str());
+	std::ofstream ofs(after_file_name.c_str());
+	if (!ifs || !ofs) return false;
+
+	// 置換してファイルへ書き込み
+	std::stringstream ss;
+	ss << ifs.rdbuf();
+	std::string content = ss.str();
+
+	ReplaceStr(content, ofs, original, replacement);
+	ifs.close();
+	ofs.close();
+	return true;
+}
+
 int main(int argc, char **argv) {
 	if (argc != 4) {
 		std::cout << "usage ./sed_is_for_losers filename s1 s2" << std::endl;
 		return 1;
 	}
-	std::ifstream ifs(argv[1]);
-	size_t s1_num = std::strlen(argv[1]);
-	char *dest = new char[s1_num + kReplaceNum];
-	std::strcpy(dest, argv[1]);
-	std::strcat(dest, ".replace");
-	std::ofstream ofs(dest);
-	if (!ifs || !ofs) return 1;
-	std::string line;
-	std::string target = argv[2];
-	while (std::getline(ifs, line)) {
-		if (target == line) {
-			ofs << argv[3] << std::endl;
-		} else {
-			ofs << line << std::endl;
-		}
+	if (ReplaceTextInFile(argv[1], argv[2], argv[3]) == false) {
+		std::cerr << "Failed I/O Stream" << std::endl;
 	}
 	return 0;
 }
