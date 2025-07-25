@@ -1,6 +1,6 @@
 NAME = hi_this_is_brain
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic-errors
 SRC = main.cpp
 
 all: $(NAME)
