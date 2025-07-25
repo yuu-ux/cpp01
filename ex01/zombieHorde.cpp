@@ -7,7 +7,7 @@ std::string to_string(int n) {
 	return ss.str();
 }
 
-Zombie* Zombie::zombieHorde(int N, std::string name) {
+Zombie* zombieHorde(int N, std::string name) {
 	Zombie* zombie = new Zombie[N];
 	for (int i = 0; i < N; i++) {
         zombie[i].setZombie(name + to_string(i+1));
