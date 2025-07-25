@@ -9,7 +9,7 @@ void ReplaceStr(const std::string content, std::ofstream& ofs, const std::string
 
 	while ((pos = content.find(original, prev)) != std::string::npos) {
 		ofs << content.substr(prev, pos - prev) << replacement;
-		prev = pos + replacement.length();
+		prev = pos + original.length();
 	}
 	ofs << content.substr(prev);
 }

@@ -32,6 +32,8 @@ run_test "test2" "hoge hoge" "hoge" "fuga" "fuga fuga"
 run_test "test3" "foo bar baz" "bar" "BAR" "foo BAR baz"
 run_test "test4" "abcabc" "abc" "XYZ" "XYZXYZ"
 run_test "test5" "nothing changes" "zzz" "yyy" "nothing changes"
+run_test "test6" "clean" "clean" "hoge" "hoge"
+run_test "test7" "hoge" "hoge" "clean" "clean"
 
 # --- 結果表示 ---
 echo
