@@ -10,8 +10,8 @@ class HumanA {
 		void attack();
 
 	private:
-		Weapon& weapon;
-		std::string name;
+		Weapon& weapon_;
+		std::string name_;
 };
 
 #endif
